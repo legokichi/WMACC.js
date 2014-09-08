@@ -21,9 +21,19 @@ AltJS Compiler Collection for BrowserJS
 <script>
 var acc = new WMACC();
 console.log(acc.list());// -> [{type:"altjs, name:"CoffeeScript", version:"1.7.1"}]
-acc.load("CoffeeScript", function(server){
-  server.compile([codeA, codeB], opt, function(err, result){
-    console.log(result);
+acc.load("CoffeeScript", function(compilerServer){
+  compilerServer.compile([
+    {
+      fileName: "a.coffee",
+      content: "console.log 'hello world'"
+    }
+  ], {wrap: false}, function(err, result){
+    if(!!err){
+      console.error(err);
+    }else{
+      console.log(result);
+    }
+    compilerServer.unload();
   });
 });
 </script>
